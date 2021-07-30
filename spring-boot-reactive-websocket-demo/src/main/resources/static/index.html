@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Reactive WebSocket Demo</title>
+</head>
+
+<body>
+
+    <div class="events"></div>
+    <script>
+        var clientWebSocket = new WebSocket("ws://127.0.0.1:9000/ws");
+        clientWebSocket.onopen = function(event) {
+            console.log("clientWebSocket.onopen", clientWebSocket, event);
+            console.log("clientWebSocket.readyState", "websocketstatus");
+            clientWebSocket.send('{"header":{"cmdId":"PING"}, "body":"test"}');
+        }
+        clientWebSocket.onclose = function(event) {
+            console.log("clientWebSocket.onclose", clientWebSocket, event);
+            events("Closing connection");
+        }
+        clientWebSocket.onerror = function(event) {
+            console.log("clientWebSocket.onerror", clientWebSocket, event);
+            events("An error occured");
+        }
+        clientWebSocket.onmessage = function(event) {
+            console.log("clientWebSocket.onmessage", clientWebSocket, error);
+            events(event.data);
+        }
+        function events(responseEvent) {
+            document.querySelector(".events").innerHTML += responseEvent
+                    + "<br>";
+        }
+    </script>
+</body>
+
+</html>
