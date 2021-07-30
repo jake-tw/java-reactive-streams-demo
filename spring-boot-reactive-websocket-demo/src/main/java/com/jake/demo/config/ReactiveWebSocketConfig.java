@@ -25,11 +25,11 @@ public class ReactiveWebSocketConfig {
     public HandlerMapping handlerMapping() {
         Map<String, WebSocketHandler> map = new HashMap<>();
 
-        applicationContext.getBeansWithAnnotation(WebSocketMapper.class).entrySet().forEach(entry -> {
-            WebSocketMapper mapper = applicationContext.findAnnotationOnBean(entry.getKey(), WebSocketMapper.class);
+        applicationContext.getBeansWithAnnotation(WebSocketMapper.class).forEach((name, obj) -> {
+            WebSocketMapper mapper = applicationContext.findAnnotationOnBean(name, WebSocketMapper.class);
 
-            if (mapper != null && WebSocketHandler.class.isInstance(entry.getValue())) {
-                map.put(mapper.endpoint(), WebSocketHandler.class.cast(entry.getValue()));
+            if (mapper != null && WebSocketHandler.class.isInstance(obj)) {
+                map.put(mapper.endpoint(), WebSocketHandler.class.cast(obj));
             }
         });
 

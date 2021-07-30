@@ -27,7 +27,7 @@
             events("An error occured");
         }
         clientWebSocket.onmessage = function(event) {
-            console.log("clientWebSocket.onmessage", clientWebSocket, error);
+            console.log("clientWebSocket.onmessage", clientWebSocket, event);
             events(event.data);
         }
         function events(responseEvent) {
